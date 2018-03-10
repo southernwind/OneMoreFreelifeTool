@@ -60,7 +60,12 @@ namespace SandBeige.OneMoreFreelifeOnlineTool.ViewModels {
 					var img = wave[$"img_{itemIndex}"];
 					var name = wave[$"name_{itemIndex}"];
 					var num = wave[$"num_{itemIndex}"];
-					yield return (name, img, int.Parse(num));
+					if (num is string numString) {
+						yield return (name, img, int.Parse(numString));
+					}
+					if (num is double numDouble) {
+						yield return (name, img, (int)numDouble);
+					}
 				}
 			}
 		}

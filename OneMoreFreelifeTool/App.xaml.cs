@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows;
 
 using Fiddler;
@@ -31,18 +32,22 @@ namespace SandBeige.OneMoreFreelifeOnlineTool {
 			};
 			this.MainWindow.ShowDialog();
 
+
 			// プロキシサーバー終了
+			URLMonInterop.ResetProxyInProcessToDefault();
 			FiddlerApplication.Shutdown();
 		}
 
 		//集約エラーハンドラ
 		private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e) {
 
+			URLMonInterop.ResetProxyInProcessToDefault();
 			FiddlerApplication.Shutdown();
 
 			if (e.ExceptionObject is Exception ex) {
 				Console.WriteLine(ex.Message);
 				Console.WriteLine(ex.StackTrace);
+				MessageBox.Show($"{ex.Message}{ex.StackTrace}");
 			} else {
 				Console.WriteLine(e.ToString());
 			}

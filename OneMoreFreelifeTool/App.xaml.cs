@@ -24,7 +24,7 @@ namespace SandBeige.OneMoreFreelifeOnlineTool {
 			}
 
 			// プロキシサーバー開始
-			FiddlerApplication.Startup(0, true, true);
+			FiddlerApplication.Startup(24791, true, true);
 
 			this.MainWindow = new MainWindow() {
 				DataContext = new MainWindowViewModel()

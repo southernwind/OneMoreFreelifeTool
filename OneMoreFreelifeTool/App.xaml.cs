@@ -1,17 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
 using System.Windows;
+
 using Fiddler;
+
 using Livet;
+
 using SandBeige.OneMoreFreelifeOnlineTool.ViewModels;
 using SandBeige.OneMoreFreelifeOnlineTool.Views;
 
@@ -30,12 +23,15 @@ namespace SandBeige.OneMoreFreelifeOnlineTool {
 				CertMaker.trustRootCert();
 			}
 
+			// プロキシサーバー開始
 			FiddlerApplication.Startup(0, true, true);
 
 			this.MainWindow = new MainWindow() {
 				DataContext = new MainWindowViewModel()
 			};
 			this.MainWindow.ShowDialog();
+
+			// プロキシサーバー終了
 			FiddlerApplication.Shutdown();
 		}
 

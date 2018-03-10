@@ -3,22 +3,33 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:vm="clr-namespace:SandBeige.OneMoreFreelifeOnlineTool.ViewModels"
 	mc:Ignorable="d"
-	Title="MainWindow" Height="450" Width="300">
+	Title="MainWindow" Height="450" Width="300"
+	d:DataContext="{d:DesignInstance vm:MainWindowViewModel}">
 	<Grid>
-		<ItemsControl ItemsSource="{Binding GetItems}">
-			<ItemsControl.ItemTemplate>
-				<DataTemplate>
-					<StackPanel>
-						<TextBlock Text="{Binding Name}"/>
-					</StackPanel>
-				</DataTemplate>
-			</ItemsControl.ItemTemplate>
-			<ItemsControl.ItemsPanel>
-				<ItemsPanelTemplate>
-					<VirtualizingStackPanel/>
-				</ItemsPanelTemplate>
-			</ItemsControl.ItemsPanel>
-		</ItemsControl>
+		<ScrollViewer x:Name="ScrollViewer">
+			<ItemsControl ItemsSource="{Binding AcquiredItems}">
+				<ItemsControl.ItemTemplate>
+					<DataTemplate>
+						<Grid>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="50"/>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="40"/>
+							</Grid.ColumnDefinitions>
+							<Image Grid.Column="0" Source="{Binding ItemImageUrl}" Margin="3"/>
+							<TextBlock Grid.Column="1" VerticalAlignment="Center" Text="{Binding Name}" Margin="3"/>
+							<TextBlock Grid.Column="2" VerticalAlignment="Center" Text="{Binding Count}" Margin="3"/>
+						</Grid>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+				<ItemsControl.ItemsPanel>
+					<ItemsPanelTemplate>
+						<VirtualizingStackPanel/>
+					</ItemsPanelTemplate>
+				</ItemsControl.ItemsPanel>
+			</ItemsControl>
+		</ScrollViewer>
 	</Grid>
 </Window>

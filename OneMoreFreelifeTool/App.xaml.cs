@@ -47,7 +47,7 @@ namespace SandBeige.OneMoreFreelifeOnlineTool {
 			if (e.ExceptionObject is Exception ex) {
 				Console.WriteLine(ex.Message);
 				Console.WriteLine(ex.StackTrace);
-				MessageBox.Show($"{ex.Message}{ex.StackTrace}");
+				File.AppendAllText("log.txt", $"{ex.Message}{ex.StackTrace}");
 			} else {
 				Console.WriteLine(e.ToString());
 			}

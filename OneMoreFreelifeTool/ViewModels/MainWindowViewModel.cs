@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-
+using System.Windows.Input;
 using Codeplex.Data;
 
 using Fiddler;
 
 using Livet;
-
+using Livet.Commands;
 using SandBeige.OneMoreFreelifeOnlineTool.Models;
 
 namespace SandBeige.OneMoreFreelifeOnlineTool.ViewModels {
@@ -37,6 +37,19 @@ namespace SandBeige.OneMoreFreelifeOnlineTool.ViewModels {
 					}
 				}
 			});
+		}
+
+		private ICommand _resetCommand;
+		/// <summary>
+		/// リセットコマンド
+		/// </summary>
+		public ICommand ResetCommand {
+			get {
+				return this._resetCommand ?? (this._resetCommand = new ViewModelCommand(()=>
+				{
+					this.AcquiredItems.Clear();
+				}));
+			}
 		}
 
 		/// <summary>

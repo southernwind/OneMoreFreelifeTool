@@ -8,7 +8,12 @@
 	Title="MainWindow" Height="450" Width="300"
 	d:DataContext="{d:DesignInstance vm:MainWindowViewModel}">
 	<Grid>
-		<ScrollViewer x:Name="ScrollViewer">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+		<Button Grid.Row="0" Command="{Binding ResetCommand}" Content="Reset"/>
+		<ScrollViewer Grid.Row="1" x:Name="ScrollViewer">
 			<ItemsControl ItemsSource="{Binding AcquiredItems}">
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>

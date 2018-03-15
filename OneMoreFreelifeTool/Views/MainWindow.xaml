@@ -5,7 +5,8 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:vm="clr-namespace:SandBeige.OneMoreFreelifeOnlineTool.ViewModels"
 	mc:Ignorable="d"
-	Title="MainWindow" Height="450" Width="300"
+	Title="ワンモアめじろ" Height="450" Width="300"
+	Icon="/OneMoreFreelifeTool;component/Resources/mejiro.ico"
 	d:DataContext="{d:DesignInstance vm:MainWindowViewModel}">
 	<Grid>
 		<Grid.RowDefinitions>

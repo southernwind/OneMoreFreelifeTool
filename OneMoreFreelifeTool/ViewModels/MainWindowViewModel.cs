@@ -23,7 +23,7 @@ namespace SandBeige.OneMoreFreelifeOnlineTool.ViewModels {
 			FiddlerApplication.AfterSessionComplete += new SessionStateHandler((session) => {
 				if (Regex.IsMatch(session.host, @".+\.omf-game\.jp")) {
 					var contentType = session.ResponseHeaders.FirstOrDefault(x => x.Name == "Content-Type")?.Value;
-					if (contentType == "application/json" && session.url.Contains("battleresult")) {
+					if (contentType == "application/json" && Regex.IsMatch(session.url, "battleresult|battleraidbossresult")) {
 						foreach (var item in GetItems(session.GetResponseBodyAsString())) {
 							var existingItem = this.AcquiredItems.FirstOrDefault(x => x.Name == item.Name && x.ItemImageUrl == item.Img);
 							if (existingItem == null) {

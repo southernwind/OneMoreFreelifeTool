@@ -18,24 +18,10 @@ namespace SandBeige.OneMoreFreelifeOnlineTool {
 			DispatcherHelper.UIDispatcher = this.Dispatcher;
 			AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
-			// 証明書インストール
-			if (!CertMaker.rootCertExists()) {
-				CertMaker.createRootCert();
-				CertMaker.trustRootCert();
-			}
-
-			// プロキシサーバー開始
-			FiddlerApplication.Startup(24791, true, true);
-
 			this.MainWindow = new MainWindow() {
 				DataContext = new MainWindowViewModel()
 			};
 			this.MainWindow.ShowDialog();
-
-
-			// プロキシサーバー終了
-			URLMonInterop.ResetProxyInProcessToDefault();
-			FiddlerApplication.Shutdown();
 		}
 
 		//集約エラーハンドラ

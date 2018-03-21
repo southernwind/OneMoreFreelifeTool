@@ -1,5 +1,6 @@
 ﻿
 using Livet;
+using Livet.Messaging;
 
 using Reactive.Bindings;
 
@@ -40,6 +41,13 @@ namespace SandBeige.OneMoreFreelifeOnlineTool.ViewModels {
 			}
 		}
 
+		private ReactiveCommand _charactersWindowOpenCommand;
+		public ReactiveCommand CharactersWindowOpenCommand {
+			get {
+				return this._charactersWindowOpenCommand ?? (this._charactersWindowOpenCommand = new ReactiveCommand());
+			}
+		}
+
 		/// <summary>
 		/// アイテムリスト
 		/// </summary>
@@ -56,6 +64,10 @@ namespace SandBeige.OneMoreFreelifeOnlineTool.ViewModels {
 			this.ResetCommand.Subscribe(this._doungeon.Reset);
 			this.StartCommand.Subscribe(this._doungeon.Start);
 			this.StopCommand.Subscribe(this._doungeon.Stop);
+			this.CharactersWindowOpenCommand.Subscribe(() => {
+				var vm = new CharactersWindowViewModel(this._doungeon);
+				this.Messenger.Raise(new TransitionMessage(vm, "OpenCharactersWindow"));
+			});
 		}
 	}
 }

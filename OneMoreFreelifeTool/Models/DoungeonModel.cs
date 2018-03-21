@@ -19,6 +19,13 @@ namespace SandBeige.OneMoreFreelifeOnlineTool.Models {
 			}
 		}
 
+		private ObservableCollection<Character> _characters;
+		public ObservableCollection<Character> Characters {
+			get {
+				return this._characters ?? (this._characters = new ObservableCollection<Character>());
+			}
+		}
+
 		public void Start() {
 
 			// 証明書インストール
@@ -37,6 +44,8 @@ namespace SandBeige.OneMoreFreelifeOnlineTool.Models {
 						var fileName = Regex.Replace(session.url, @".*/(.+?)\?.+", "$1");
 						if (new[] { "battleresult", "battleraidbossresult" }.Contains(fileName)) {
 							RegisterResult(session);
+						} else if (fileName == "battlemain") {
+							RegisterCharacterStatus(session);
 						}
 					}
 				}
@@ -88,6 +97,32 @@ namespace SandBeige.OneMoreFreelifeOnlineTool.Models {
 					continue;
 				}
 				existingItem.Count += Num;
+			}
+		}
+
+		private void RegisterCharacterStatus(Session session) {
+			var jsonString = session.GetResponseBodyAsString();
+			var json = DynamicJson.Parse(jsonString);
+			for (var characterIndex = 0; characterIndex < 6; characterIndex++) {
+				if (!json.IsDefined("battle_character_data") || !json.battle_character_data.IsDefined(characterIndex)) {
+					continue;
+				}
+				var receiveCharacterData = json.battle_character_data[characterIndex];
+				if (receiveCharacterData == null) {
+					continue;
+				}
+
+				var character = this.Characters.FirstOrDefault(x => x.Name == receiveCharacterData.name);
+				if (character == null) {
+					character = new Character(receiveCharacterData.name);
+					this.Characters.Add(character);
+				}
+				character.Hp = int.Parse(receiveCharacterData.hp_point);
+				character.MaxHp = int.Parse(receiveCharacterData.hp_point_max);
+				character.Mp = int.Parse(receiveCharacterData.mp_point);
+				character.MaxMp = int.Parse(receiveCharacterData.mp_point_max);
+				character.ImageUrl = receiveCharacterData.card_url;
+
 			}
 		}
 

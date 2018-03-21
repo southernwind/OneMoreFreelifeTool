@@ -1,9 +1,8 @@
-﻿<Window x:Class="SandBeige.OneMoreFreelifeOnlineTool.Views.MainWindow"
+﻿<Window x:Class="SandBeige.OneMoreFreelifeOnlineTool.Views.CharactersWindow"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:local="clr-namespace:SandBeige.OneMoreFreelifeOnlineTool.Views"
 	xmlns:vm="clr-namespace:SandBeige.OneMoreFreelifeOnlineTool.ViewModels"
 	xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 	xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
@@ -11,41 +10,24 @@
 	mc:Ignorable="d"
 	Title="ワンモアめじろ" Height="450" Width="300"
 	Icon="/OneMoreFreelifeTool;component/Resources/mejiro.ico"
-	d:DataContext="{d:DesignInstance vm:MainWindowViewModel}">
-	<i:Interaction.Triggers>
-		<i:EventTrigger EventName="Loaded">
-			<i:InvokeCommandAction Command="{Binding StartCommand}"/>
-		</i:EventTrigger>
-		<i:EventTrigger EventName="Closing">
-			<i:InvokeCommandAction Command="{Binding StopCommand}"/>
-		</i:EventTrigger>
-		<l:InteractionMessageTrigger 
-			MessageKey="OpenCharactersWindow"
-			Messenger="{Binding Messenger}">
-			<l:TransitionInteractionMessageAction
-				WindowType="{x:Type local:CharactersWindow}" Mode="NewOrActive"/>
-		</l:InteractionMessageTrigger>
-	</i:Interaction.Triggers>
+	d:DataContext="{d:DesignInstance vm:CharactersWindowViewModel}">
 	<Grid>
 		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="*"/>
-			<RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
-		<Button Grid.Row="0" Command="{Binding ResetCommand}" Content="Reset"/>
 		<ScrollViewer Grid.Row="1" x:Name="ScrollViewer">
-			<ItemsControl ItemsSource="{Binding AcquiredItems}">
+			<ItemsControl ItemsSource="{Binding Characters}">
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
 						<Grid>
 							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="50"/>
+								<ColumnDefinition Width="150"/>
 								<ColumnDefinition Width="*"/>
 								<ColumnDefinition Width="40"/>
 							</Grid.ColumnDefinitions>
-							<Image Grid.Column="0" Source="{Binding ItemImageUrl}" Margin="3"/>
+							<Image Grid.Column="0" Source="{Binding ImageUrl}" Margin="3"/>
 							<TextBlock Grid.Column="1" VerticalAlignment="Center" Text="{Binding Name}" Margin="3"/>
-							<TextBlock Grid.Column="2" VerticalAlignment="Center" Text="{Binding Count}" Margin="3"/>
+							<TextBlock Grid.Column="2" VerticalAlignment="Center" Text="{Binding Hp}" Margin="3"/>
 						</Grid>
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>
@@ -56,8 +38,5 @@
 				</ItemsControl.ItemsPanel>
 			</ItemsControl>
 		</ScrollViewer>
-		<StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
-			<Button Command="{Binding CharactersWindowOpenCommand}" Content="CharactersWindow Open"/>
-		</StackPanel>
 	</Grid>
 </Window>
